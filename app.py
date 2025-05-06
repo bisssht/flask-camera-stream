@@ -1,8 +1,9 @@
 from flask import Flask, Response
 import cv2
+import os
 
 app = Flask(__name__)
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0)  # May not work on cloud servers
 
 def generate_frames():
     while True:
@@ -21,4 +22,5 @@ def index():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
